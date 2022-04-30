@@ -6,5 +6,6 @@ namespace OceanAPI.NET6.Services
     public interface IBasketService
     {
         Basket GetBasket(int id);
+        Basket UpdateById(Basket basket, int id);
     }
 }

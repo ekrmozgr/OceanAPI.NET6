@@ -19,5 +19,10 @@ namespace OceanAPI.NET6.Services
                 return null;
             return basket;
         }
+
+        public Basket UpdateById(Basket basket, int id)
+        {
+            return _basketRepository.UpdateById(basket, id);
+        }
     }
 }

@@ -70,10 +70,13 @@ builder.Services.AddDbContext<DatabaseContext>(
 // repository
 builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 builder.Services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
 
 // services
 builder.Services.AddScoped<ILoginService,LoginManager>();
 builder.Services.AddScoped<IBasketService, BasketManager>();
+builder.Services.AddScoped<IProductService, ProductManager>();
+builder.Services.AddScoped<IBasketTransactionService, BasketTransactionManager>();
 
 // automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
