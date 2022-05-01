@@ -6,6 +6,6 @@ namespace OceanAPI.NET6.Dtos
     {
         public int ProductId { get; set; }
         public int ProductQuantity { get; set; }
-        public ProductDto Product { get; set; }
+        public ProductReadDto Product { get; set; }
     }
 }

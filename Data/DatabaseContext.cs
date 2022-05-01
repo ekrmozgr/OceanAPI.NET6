@@ -40,26 +40,6 @@ namespace OceanAPI.NET6.Data
                 .WithMany(p => p.BasketProducts)
                 .HasForeignKey(bp => bp.BasketId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Product>().HasData(new Product { ProductId = 1 , UserId = 1, Price = 10, DiscountPercent = 10,
-                             Name = "DenemeUrun", CourseHourDuration = "5", CourseMinuteDuration = "10", Explanation = "AAA", DiscountPrice = 9});
-            modelBuilder.Entity<Product>().HasData(new Product
-            {
-                ProductId = 2,
-                UserId = 1,
-                Price = 10,
-                DiscountPercent = 10,
-                Name = "DenemeUrun",
-                CourseHourDuration = "5",
-                CourseMinuteDuration = "10",
-                Explanation = "AAA",
-                DiscountPrice = 9
-            });
-
-
-            modelBuilder.Entity<BasketProduct>().HasData(new BasketProduct { ProductId = 1, BasketId = 1, ProductQuantity = 5 });
-            modelBuilder.Entity<BasketProduct>().HasData(new BasketProduct { ProductId = 2, BasketId = 1, ProductQuantity = 1 });
-
         }
     }
 }

@@ -5,6 +5,10 @@ namespace OceanAPI.NET6.Models
 {
     public class User
     {
+        public User()
+        {
+            Role = ERoles.USER;
+        }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int UserId { get; set; }
