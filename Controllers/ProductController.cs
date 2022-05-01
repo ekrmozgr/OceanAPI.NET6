@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OceanAPI.NET6.Dtos;
 using OceanAPI.NET6.Models;
@@ -19,55 +21,65 @@ namespace OceanAPI.NET6.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}")]
-        public ActionResult GetProduct(int id)
+        public async Task<ActionResult> GetProduct(int id)
         {
-            var product = _productService.GetProduct(id);
+            var product = await _productService.GetProduct(id);
             if(product == null)
                 return NotFound();
             var productDto = _mapper.Map<ProductReadDto>(product);
             return Ok(productDto);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
-        public ActionResult CreateProduct(ProductCreateDto productCreateDto)
+        public async Task<ActionResult> CreateProduct(ProductCreateDto productCreateDto)
         {
+            if (!Extensions.IsCurrentUser(productCreateDto.UserId, User))
+                return Forbid();
             var product = _mapper.Map<Product>(productCreateDto);
-            var response = _productService.CreateProduct(product);
+            var response = await _productService.CreateProduct(product);
             var productDto = _mapper.Map<ProductReadDto>(response);
             return Ok(productDto);
         }
 
         [HttpDelete("{id}YYYYYYYYY")]
-        public ActionResult DeleteProduct()
+        public async Task<ActionResult> DeleteProduct()
         {
             return null;
         }
 
         [HttpGet("category/{categoryId}YYYYYYYYYYY")]
-        public ActionResult GetProductsByCategory(int categoryId)
+        public async Task<ActionResult> GetProductsByCategory(int categoryId)
         {
-            return Ok(_productService.GetProductsByCategory(categoryId));
+            return Ok(await _productService.GetProductsByCategory(categoryId));
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("user/{userId}")]
-        public ActionResult GetProductsByUser(int userId)
+        public async Task<ActionResult> GetProductsByUser(int userId)
         {
-            var product = _productService.GetProductsByUser(userId);
+            if (!Extensions.IsCurrentUser(userId, User))
+                return Forbid();
+            var product = await _productService.GetProductsByUser(userId);
             var productDto = _mapper.Map<List<ProductReadDto>>(product);
             return Ok(productDto);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("{id}")]
-        public ActionResult EditProduct(int id, ProductUpdateDto productUpdateDto)
+        public async Task<ActionResult> EditProduct(int id, ProductUpdateDto productUpdateDto)
         {
-            var existingProduct = _productService.GetProduct(id);
+            if (!Extensions.IsCurrentUser(productUpdateDto.UserId, User))
+                return Forbid();
+            var existingProduct = await _productService.GetProduct(id);
             if (existingProduct == null)
                 return NotFound();
-            if (!existingProduct.UserId.Equals(productUpdateDto.UserId))
-                return BadRequest();
+            if (existingProduct.UserId != productUpdateDto.UserId)
+                return Forbid();
             var product = _mapper.Map(productUpdateDto,existingProduct);
-            _productService.UpdateProduct(product, id);
+            await _productService.UpdateProduct(product, id);
             var productDto = _mapper.Map<ProductReadDto>(product);
             return Ok(productDto);
         }

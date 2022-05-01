@@ -5,7 +5,7 @@ namespace OceanAPI.NET6.Services
 {
     public interface ILoginService
     {
-        User Authenticate(UserLoginDto userLogin);
+        Task<User> Authenticate(UserLoginDto userLogin);
         string GenerateToken(User user);
     }
 }

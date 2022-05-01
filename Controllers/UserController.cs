@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OceanAPI.NET6.Dtos;
 using OceanAPI.NET6.Models;
@@ -19,33 +21,42 @@ namespace OceanAPI.NET6.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}")]
-        public ActionResult GetUser(int id)
+        public async Task<ActionResult> GetUser(int id)
         {
-            var user = _userService.GetUserById(id);
+            if (!Extensions.IsCurrentUser(id, User))
+                return Forbid();
+            var user = await _userService.GetUserById(id);
             if(user == null)
                 return NotFound();
             var userDto = _mapper.Map<User, UserReadDto>(user);
             return Ok(userDto);
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        public ActionResult CreateUser(UserCreateDto userCreateDto)
+        public async Task<ActionResult> CreateUser(UserCreateDto userCreateDto)
         {
             var user = _mapper.Map<UserCreateDto, User>(userCreateDto);
-            var response = _userService.CreateUser(user);
+            var response = await _userService.CreateUser(user);
+            if(response == null)
+                return BadRequest();
             var userDto = _mapper.Map<User,UserReadDto>(user);
             return Ok(userDto);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("{id}")]
-        public ActionResult UpdateUser(int id, UserCreateDto createUserDto)
+        public async Task<ActionResult> UpdateUser(int id, UserCreateDto createUserDto)
         {
-            var existingUser = _userService.GetUserById(id);
+            if (!Extensions.IsCurrentUser(id, User))
+                return Forbid();
+            var existingUser = await _userService.GetUserById(id);
             if (existingUser == null)
                 return NotFound();
             var user = _mapper.Map(createUserDto, existingUser);
-            _userService.UpdateUser(user, id);
+            await _userService.UpdateUser(user, id);
             var userDto = _mapper.Map<UserReadDto>(user);
             return Ok(userDto);
         }

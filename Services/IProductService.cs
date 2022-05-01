@@ -5,11 +5,11 @@ namespace OceanAPI.NET6.Services
 {
     public interface IProductService
     {
-        Product GetProduct(int id);
-        List<Product> GetProductsByCategory(int categoryId);
-        List<Product> GetProductsByUser(int userId);
-        Product UpdateProduct(Product product, int id);
-        Product CreateProduct(Product product);
-        Product DeleteProduct(int id);
+        Task<Product> GetProduct(int id);
+        Task<List<Product>> GetProductsByCategory(int categoryId);
+        Task<List<Product>> GetProductsByUser(int userId);
+        Task<Product> UpdateProduct(Product product, int id);
+        Task<Product> CreateProduct(Product product);
+        Task<Product> DeleteProduct(int id);
     }
 }

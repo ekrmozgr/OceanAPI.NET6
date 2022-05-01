@@ -8,7 +8,7 @@ namespace OceanAPI.NET6.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int ProductId { get; set; }
-        public string? Name { get; set; }
+        public string Name { get; set; }
         public decimal Price { get; set; }
         public int DiscountPercent { get; set; }
         public decimal DiscountPrice { get; set; }
@@ -17,6 +17,6 @@ namespace OceanAPI.NET6.Models
         public string CourseMinuteDuration { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        public List<BasketProduct>? BasketProducts { get; set; }
+        public List<BasketProduct> BasketProducts { get; set; }
     }
 }

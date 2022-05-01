@@ -12,17 +12,17 @@ namespace OceanAPI.NET6.Services
             _basketRepository = basketRepository;
         }
 
-        public Basket GetBasket(int id)
+        public async Task<Basket> GetBasket(int id)
         {
-            var basket = _basketRepository.GetBasket(id);
+            var basket = await _basketRepository.GetBasket(id);
             if (basket == null)
                 return null;
             return basket;
         }
 
-        public Basket UpdateById(Basket basket, int id)
+        public async Task<Basket> UpdateById(Basket basket, int id)
         {
-            return _basketRepository.UpdateById(basket, id);
+            return await _basketRepository.UpdateById(basket, id);
         }
     }
 }

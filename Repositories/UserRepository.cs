@@ -15,32 +15,32 @@ namespace OceanAPI.NET6.Repositories
             _dbSet = context.Set<User>();
         }
 
-        public User AddUser(User user)
+        public async Task<User> AddUser(User user)
         {
-            _dbSet.Add(user);
-            _context.SaveChanges();
+            await _dbSet.AddAsync(user);
+            await _context.SaveChangesAsync();
             return user;
         }
 
-        public List<User> GetAllUsers()
+        public async Task<List<User>> GetAllUsers()
         {
-            return _dbSet.ToList();
+            return await _dbSet.ToListAsync();
         }
 
-        public User GetUser(int id)
+        public async Task<User> GetUser(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public User UpdateUser(User user, int id)
+        public async Task<User> UpdateUser(User user, int id)
         {
-            var _user = _dbSet.Find(id);
+            var _user = await _dbSet.FindAsync(id);
             if (_user == null)
                 return null;
             var response = _context.Entry(_user);
             response.State = EntityState.Modified;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             var result = response.Entity;
             
             return result;

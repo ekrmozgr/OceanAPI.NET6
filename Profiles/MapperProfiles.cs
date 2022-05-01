@@ -8,7 +8,6 @@ namespace OceanAPI.NET6.Profiles
     {
         public MapperProfiles()
         {
-
             CreateMap<Basket, BasketDto>();
 
             CreateMap<BasketProduct, BasketProductReadDto>();

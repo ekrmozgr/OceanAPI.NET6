@@ -14,23 +14,23 @@ namespace OceanAPI.NET6.Repositories
             _context = context;
             _dbSet = context.Set<Basket>();
         }
-        public Basket GetBasket(int id)
+        public async Task<Basket> GetBasket(int id)
         {
-            if(_dbSet.Find(id) == null)
+            if(await _dbSet.FindAsync(id) == null)
                 return null;
-            var basket = _dbSet.Include(b => b.BasketProducts).ThenInclude(bp => bp.Product).Where(b => b.UserId.Equals(id)).FirstOrDefault();
+            var basket = await _dbSet.Include(b => b.BasketProducts).ThenInclude(bp => bp.Product).Where(b => b.UserId.Equals(id)).FirstOrDefaultAsync();
             return basket;
         }
 
-        public Basket UpdateById(Basket entity, int id)
+        public async Task<Basket> UpdateById(Basket entity, int id)
         {
-            var model = _dbSet.Find(id);
+            var model = await _dbSet.FindAsync(id);
             if (model == null)
                 return null;
             var response = _context.Entry(model);
             response.State = EntityState.Modified;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return response.Entity;
         }
     }

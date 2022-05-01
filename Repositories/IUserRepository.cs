@@ -4,9 +4,9 @@ namespace OceanAPI.NET6.Repositories
 {
     public interface IUserRepository
     {
-        List<User> GetAllUsers();
-        User AddUser(User user);
-        User UpdateUser(User user, int id);
-        User GetUser(int id);
+        Task<List<User>> GetAllUsers();
+        Task<User> AddUser(User user);
+        Task<User> UpdateUser(User user, int id);
+        Task<User> GetUser(int id);
     }
 }

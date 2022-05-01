@@ -4,7 +4,7 @@ namespace OceanAPI.NET6.Repositories
 {
     public interface IBasketRepository
     {
-        Basket GetBasket(int id);
-        Basket UpdateById(Basket entity, int id);
+        Task<Basket> GetBasket(int id);
+        Task<Basket> UpdateById(Basket entity, int id);
     }
 }

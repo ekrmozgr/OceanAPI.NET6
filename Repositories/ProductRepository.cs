@@ -14,32 +14,32 @@ namespace OceanAPI.NET6.Repositories
             _dbSet = context.Set<Product>();
         }
 
-        public Product AddProduct(Product product)
+        public async Task<Product> AddProduct(Product product)
         {
-            _dbSet.Add(product);
-            _context.SaveChanges();
+            await _dbSet.AddAsync(product);
+            await _context.SaveChangesAsync();
             return product;
         }
 
-        public Product GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public List<Product> GetProductsByUser(int userId)
+        public async Task<List<Product>> GetProductsByUser(int userId)
         {
-            return _dbSet.Where(x => x.UserId == userId).ToList();
+            return await _dbSet.Where(x => x.UserId == userId).ToListAsync();
         }
 
-        public Product UpdateProduct(Product product, int id)
+        public async Task<Product> UpdateProduct(Product product, int id)
         {
-            var _product = _dbSet.Find(id);
+            var _product = await _dbSet.FindAsync(id);
             if (_product == null)
                 return null;
             var response = _context.Entry(_product);
             response.State = EntityState.Modified;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             var result = response.Entity;
 
             return result;

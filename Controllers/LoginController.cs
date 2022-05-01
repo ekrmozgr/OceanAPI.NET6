@@ -10,7 +10,6 @@ namespace OceanAPI.NET6.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "USER")]
         private readonly ILoginService _loginService;
 
         public LoginController(ILoginService loginService)
@@ -20,14 +19,9 @@ namespace OceanAPI.NET6.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Login(UserLoginDto userLogin)
+        public async Task<ActionResult> Login(UserLoginDto userLogin)
         {
-            if (userLogin == null)
-                return BadRequest();
-            if (string.IsNullOrEmpty(userLogin.Email) || string.IsNullOrEmpty(userLogin.Password))
-                return BadRequest();
-
-            var user = _loginService.Authenticate(userLogin);
+            var user = await _loginService.Authenticate(userLogin);
             if(user == null)
                 return NotFound();
 

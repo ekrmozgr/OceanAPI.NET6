@@ -9,6 +9,6 @@ namespace OceanAPI.NET6.Models
         public User User { get; set; }
         public decimal Price { get; set; }
         public int ProductCount { get; set; }
-        public List<BasketProduct>? BasketProducts { get; set; }
+        public List<BasketProduct> BasketProducts { get; set; }
     }
 }

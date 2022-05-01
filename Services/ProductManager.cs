@@ -11,40 +11,38 @@ namespace OceanAPI.NET6.Services
             _productRepository = productRepository;
         }
 
-        public Product CreateProduct(Product product)
+        public async Task<Product> CreateProduct(Product product)
         {
-            // kontrol yap
-
             decimal discount = product.Price * product.DiscountPercent / 100;
             product.DiscountPrice = product.Price - discount;
-            return _productRepository.AddProduct(product);
+            return await _productRepository.AddProduct(product);
         }
 
-        public Product DeleteProduct(int id)
+        public async Task<Product> DeleteProduct(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Product GetProduct(int id)
+        public async Task<Product> GetProduct(int id)
         {
-            return _productRepository.GetProductById(id);
+            return await _productRepository.GetProductById(id);
         }
 
-        public List<Product> GetProductsByCategory(int categoryId)
+        public async Task<List<Product>> GetProductsByCategory(int categoryId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Product> GetProductsByUser(int userId)
+        public async Task<List<Product>> GetProductsByUser(int userId)
         {
-            return _productRepository.GetProductsByUser(userId);
+            return await _productRepository.GetProductsByUser(userId);
         }
 
-        public Product UpdateProduct(Product product, int id)
+        public async Task<Product> UpdateProduct(Product product, int id)
         {
             decimal discount = product.Price * product.DiscountPercent / 100;
             product.DiscountPrice = product.Price - discount;
-            return _productRepository.UpdateProduct(product, id);
+            return await _productRepository.UpdateProduct(product, id);
         }
     }
 }

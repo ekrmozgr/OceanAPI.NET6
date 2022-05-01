@@ -4,8 +4,8 @@ namespace OceanAPI.NET6.Services
 {
     public interface IUserService
     {
-        User CreateUser(User user);
-        User UpdateUser(User user, int id);
-        User GetUserById(int id);
+        Task<User> CreateUser(User user);
+        Task<User> UpdateUser(User user, int id);
+        Task<User> GetUserById(int id);
     }
 }

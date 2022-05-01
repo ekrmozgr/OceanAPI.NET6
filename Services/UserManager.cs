@@ -10,20 +10,22 @@ namespace OceanAPI.NET6.Services
         {
             _userRepository = userRepository;
         }
-        // user var mi yok mu kontrol et
-        public User CreateUser(User user)
+        public async Task<User> CreateUser(User user)
         {
-            return _userRepository.AddUser(user);
+            var existingUser = (await _userRepository.GetAllUsers()).SingleOrDefault(u=> u.Email.Equals(user.Email) || u.MobilePhone.Equals(user.MobilePhone));
+            if (existingUser != null)
+                return null;
+            return await _userRepository.AddUser(user);
         }
 
-        public User GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
-            return _userRepository.GetUser(id);
+            return await _userRepository.GetUser(id);
         }
 
-        public User UpdateUser(User user, int id)
+        public async Task<User> UpdateUser(User user, int id)
         {
-            return _userRepository.UpdateUser(user, id);
+            return await _userRepository.UpdateUser(user, id);
         }
     }
 }

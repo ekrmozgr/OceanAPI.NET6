@@ -18,16 +18,15 @@ namespace OceanAPI.NET6.Services
             _userRepository = userRepository;
             _config = config;
         }
-        public User Authenticate(UserLoginDto userLogin)
+        public async Task<User> Authenticate(UserLoginDto userLogin)
         {
-            User? user = _userRepository.GetAllUsers().FirstOrDefault(u => u.Email.ToLower() == userLogin.Email.ToLower() &&
+            User? user = (await _userRepository.GetAllUsers()).FirstOrDefault(u => u.Email.ToLower() == userLogin.Email.ToLower() &&
                                                                      u.Password == userLogin.Password);
             return user;
         }
 
         public string GenerateToken(User user)
         {
-            Console.WriteLine(user.Role.ToString());
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
