@@ -14,12 +14,13 @@ namespace OceanAPI.NET6.Controllers
     {
         private readonly IBasketTransactionService _basketTransactionService;
         private readonly IMapper _mapper;
-        public BasketController(IBasketService basketService, IBasketTransactionService basketTransactionService, IMapper mapper)
+        public BasketController(IBasketTransactionService basketTransactionService, IMapper mapper)
         {
             _mapper = mapper;
             _basketTransactionService = basketTransactionService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{basketId}")]
         public async Task<ActionResult> GetBasket(int basketId)
         {
