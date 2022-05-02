@@ -18,5 +18,11 @@ namespace OceanAPI.NET6.Models
         public int UserId { get; set; }
         public User User { get; set; }
         public List<BasketProduct> BasketProducts { get; set; }
+
+        public int ProductCategoryId { get; set; }
+
+        [Column(TypeName = "nvarchar(40)")]
+        public EProductCategory ProductCategory { get; set; }
+
     }
 }

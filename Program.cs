@@ -73,6 +73,8 @@ builder.Services.AddDbContext<DatabaseContext>(
 builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 builder.Services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
 builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
+builder.Services.AddScoped(typeof(IFaqRepository), typeof(FaqRepository));
+builder.Services.AddScoped(typeof(ICompanyContactRepository), typeof(CompanyContactRepository));
 
 // services
 builder.Services.AddScoped<ILoginService,LoginManager>();
@@ -80,6 +82,7 @@ builder.Services.AddScoped<IBasketService, BasketManager>();
 builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<IBasketTransactionService, BasketTransactionManager>();
 builder.Services.AddScoped<IUserService, UserManager>();
+builder.Services.AddScoped<IInfoService, InfoManager>();
 
 // automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

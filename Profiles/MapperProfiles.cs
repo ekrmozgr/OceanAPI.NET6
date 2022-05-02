@@ -18,6 +18,9 @@ namespace OceanAPI.NET6.Profiles
             CreateMap<Product, ProductReadDto>();
             CreateMap<ProductUpdateDto, Product>();
             CreateMap<ProductCreateDto, Product>();
+
+            CreateMap<FAQCategory,FaqReadDto>()
+                .ForMember(fr => fr.FaqCategoryName, fc => fc.MapFrom(f => f.FaqCategory.GetDisplayName()));
         }
     }
 }

@@ -8,9 +8,9 @@ namespace OceanAPI.NET6.Dtos
         [EmailAddress]
         public string Email { get; set; }
 
-        // Minimum eight characters, at least one letter, one number and one special character max 15 char
+        //Minimum eight characters, at least one upper letter, one lower letter, one number and one special character:
         [Required]
-        [RegularExpression("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,15}$")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", ErrorMessage = "Password must be between 8 and 15 characters and contain one uppercase letter, one lowercase letter, one digit and one special character.")]
         public string Password { get; set; }
     }
 }
