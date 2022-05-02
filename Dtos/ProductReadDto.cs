@@ -11,5 +11,8 @@
         public string Explanation { get; set; }
         public string CourseHourDuration { get; set; }
         public string CourseMinuteDuration { get; set; }
+        public int ProductCategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public UserInProductReadDto User { get; set; }
     }
 }

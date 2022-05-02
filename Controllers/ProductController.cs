@@ -44,16 +44,13 @@ namespace OceanAPI.NET6.Controllers
             return Ok(productDto);
         }
 
-        [HttpDelete("{id}YYYYYYYYY")]
-        public async Task<ActionResult> DeleteProduct()
-        {
-            return null;
-        }
-
-        [HttpGet("category/{categoryId}YYYYYYYYYYY")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("category/{categoryId}")]
         public async Task<ActionResult> GetProductsByCategory(int categoryId)
         {
-            return Ok(await _productService.GetProductsByCategory(categoryId));
+            var products = await _productService.GetProductsByCategory(categoryId);
+            var productsDto = _mapper.Map<List<ProductReadDto>>(products);
+            return Ok(productsDto);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -62,8 +59,8 @@ namespace OceanAPI.NET6.Controllers
         {
             if (!Extensions.IsCurrentUser(userId, User))
                 return Forbid();
-            var product = await _productService.GetProductsByUser(userId);
-            var productDto = _mapper.Map<List<ProductReadDto>>(product);
+            var products = await _productService.GetProductsByUser(userId);
+            var productDto = _mapper.Map<List<ProductReadDto>>(products);
             return Ok(productDto);
         }
 

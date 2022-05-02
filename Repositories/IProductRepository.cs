@@ -8,5 +8,6 @@ namespace OceanAPI.NET6.Repositories
         Task<Product> UpdateProduct(Product product, int id);
         Task<Product> AddProduct(Product product);
         Task<List<Product>> GetProductsByUser(int userId);
+        Task<List<Product>> GetProductsByCategory(int categoryId);
     }
 }

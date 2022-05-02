@@ -23,12 +23,17 @@ namespace OceanAPI.NET6.Repositories
 
         public async Task<Product> GetProductById(int id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.Include(x => x.User).FirstOrDefaultAsync(x=> x.ProductId.Equals(id));
+        }
+
+        public async Task<List<Product>> GetProductsByCategory(int categoryId)
+        {
+            return await _dbSet.Where(x => x.ProductCategoryId.Equals(categoryId)).Include(x=> x.User).ToListAsync();
         }
 
         public async Task<List<Product>> GetProductsByUser(int userId)
         {
-            return await _dbSet.Where(x => x.UserId == userId).ToListAsync();
+            return await _dbSet.Where(x => x.UserId.Equals(userId)).Include(x => x.User).ToListAsync();
         }
 
         public async Task<Product> UpdateProduct(Product product, int id)

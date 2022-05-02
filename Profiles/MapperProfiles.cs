@@ -15,12 +15,20 @@ namespace OceanAPI.NET6.Profiles
             CreateMap<User, UserReadDto>();
             CreateMap<UserCreateDto, User>();
 
-            CreateMap<Product, ProductReadDto>();
-            CreateMap<ProductUpdateDto, Product>();
-            CreateMap<ProductCreateDto, Product>();
+            CreateMap<User, UserInProductReadDto>();
+
+            CreateMap<Product, ProductReadDto>()
+                .ForMember(p => p.CategoryName, x => x.MapFrom(a => a.ProductCategory.GetDisplayName()));
+            CreateMap<ProductUpdateDto, Product>()
+                .ForMember(p => p.ProductCategory, x=> x.MapFrom(pu => (EProductCategory)pu.ProductCategoryId));
+            CreateMap<ProductCreateDto, Product>()
+                .ForMember(p => p.ProductCategory, x => x.MapFrom(pu => (EProductCategory)pu.ProductCategoryId));
 
             CreateMap<FAQCategory,FaqReadDto>()
                 .ForMember(fr => fr.FaqCategoryName, fc => fc.MapFrom(f => f.FaqCategory.GetDisplayName()));
+
+            CreateMap<ProductCategory, ProductCategoryReadDto>()
+                .ForMember(p => p.CategoryName, x => x.MapFrom(a => a.ProductCategorys.GetDisplayName()));
         }
     }
 }

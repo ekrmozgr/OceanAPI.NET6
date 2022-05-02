@@ -33,5 +33,8 @@ namespace OceanAPI.NET6.Dtos
         [Required]
         [RegularExpression("0 | ^[1-9][0-9]*$")]
         public string CourseMinuteDuration { get; set; }
+
+        [Required]
+        public int ProductCategoryId { get; set; }
     }
 }

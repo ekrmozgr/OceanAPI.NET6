@@ -18,11 +18,6 @@ namespace OceanAPI.NET6.Services
             return await _productRepository.AddProduct(product);
         }
 
-        public async Task<Product> DeleteProduct(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Product> GetProduct(int id)
         {
             return await _productRepository.GetProductById(id);
@@ -30,7 +25,7 @@ namespace OceanAPI.NET6.Services
 
         public async Task<List<Product>> GetProductsByCategory(int categoryId)
         {
-            throw new NotImplementedException();
+            return await _productRepository.GetProductsByCategory(categoryId);
         }
 
         public async Task<List<Product>> GetProductsByUser(int userId)

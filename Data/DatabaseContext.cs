@@ -36,7 +36,7 @@ namespace OceanAPI.NET6.Data
                 new Role { RoleId = 3, ERole = ERoles.ADMIN });
 
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Email = "ekrem@outlook", Password = "ekrem123.", Role = ERoles.ADMIN, Name = "eko", Surname = "ozgur", MobilePhone = "5076275287" });
+                new User { UserId = 1, Email = "ekrem@outlook", Password = "Ekrem123.", Role = ERoles.ADMIN, Name = "eko", Surname = "ozgur", MobilePhone = "5076275287" });
             modelBuilder.Entity<Basket>().HasData(
                 new Basket { UserId = 1, ProductCount = 0, Price = 0 });
 

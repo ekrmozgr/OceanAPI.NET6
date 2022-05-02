@@ -10,6 +10,5 @@ namespace OceanAPI.NET6.Services
         Task<List<Product>> GetProductsByUser(int userId);
         Task<Product> UpdateProduct(Product product, int id);
         Task<Product> CreateProduct(Product product);
-        Task<Product> DeleteProduct(int id);
     }
 }
