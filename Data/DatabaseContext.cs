@@ -18,6 +18,7 @@ namespace OceanAPI.NET6.Data
         public DbSet<CompanyContacts>  CompanyContacts { get; set; }
         public DbSet<FAQCategory> FaqCategories { get; set; }
         public DbSet<FAQ> Faq { get; set; }
+        public DbSet<CourseLevel> CourseLevels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +35,13 @@ namespace OceanAPI.NET6.Data
                 new Role { RoleId = 2, ERole = ERoles.INSTRUCTOR });
             modelBuilder.Entity<Role>().HasData(
                 new Role { RoleId = 3, ERole = ERoles.ADMIN });
+
+            modelBuilder.Entity<CourseLevel>().HasData(
+                new CourseLevel { CourseLevelId = 1, ECourseLevel = ECourseLevel.BASLANGIC });
+            modelBuilder.Entity<CourseLevel>().HasData(
+                new CourseLevel { CourseLevelId = 2, ECourseLevel = ECourseLevel.ORTA });
+            modelBuilder.Entity<CourseLevel>().HasData(
+                new CourseLevel { CourseLevelId = 3, ECourseLevel = ECourseLevel.ILERI });
 
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, Email = "ekrem@outlook", Password = "Ekrem123.", Role = ERoles.ADMIN, Name = "eko", Surname = "ozgur", MobilePhone = "5076275287" });

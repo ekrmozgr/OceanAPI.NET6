@@ -24,5 +24,9 @@ namespace OceanAPI.NET6.Models
         [Column(TypeName = "nvarchar(40)")]
         public EProductCategory ProductCategory { get; set; }
 
+        public int CourseLevelId { get; set; }
+        [Column(TypeName = "nvarchar(20)")]
+        public ECourseLevel CourseLevel { get; set; }
+
     }
 }

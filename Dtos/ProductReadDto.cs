@@ -1,4 +1,6 @@
-﻿namespace OceanAPI.NET6.Dtos
+﻿using OceanAPI.NET6.Models;
+
+namespace OceanAPI.NET6.Dtos
 {
     public class ProductReadDto
     {
@@ -13,6 +15,8 @@
         public string CourseMinuteDuration { get; set; }
         public int ProductCategoryId { get; set; }
         public string CategoryName { get; set; }
+        public int CourseLevelId { get; set; }
+        public string CourseLevel { get; set; }
         public UserInProductReadDto User { get; set; }
     }
 }

@@ -75,7 +75,7 @@ builder.Services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
 builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
 builder.Services.AddScoped(typeof(IFaqRepository), typeof(FaqRepository));
 builder.Services.AddScoped(typeof(ICompanyContactRepository), typeof(CompanyContactRepository));
-builder.Services.AddScoped(typeof(IProductCategoryRepository), typeof(ProductCategoryRepository));
+builder.Services.AddScoped(typeof(IEnumRepository<>), typeof(EnumRepository<>));
 
 // services
 builder.Services.AddScoped<ILoginService,LoginManager>();
@@ -84,7 +84,7 @@ builder.Services.AddScoped<IProductService, ProductManager>();
 builder.Services.AddScoped<IBasketTransactionService, BasketTransactionManager>();
 builder.Services.AddScoped<IUserService, UserManager>();
 builder.Services.AddScoped<IInfoService, InfoManager>();
-builder.Services.AddScoped<IProductCategoryService, ProductCategoryManager>();
+builder.Services.AddScoped<IEnumService, EnumManager>();
 
 // automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

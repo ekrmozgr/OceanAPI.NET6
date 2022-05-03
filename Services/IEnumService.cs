@@ -2,8 +2,10 @@
 
 namespace OceanAPI.NET6.Services
 {
-    public interface IProductCategoryService
+    public interface IEnumService
     {
         Task<List<ProductCategory>> GetProductCategories();
+        Task<List<CourseLevel>> GetCourseLevels();
+        Task<List<Role>> GetRoles();
     }
 }

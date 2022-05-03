@@ -33,5 +33,8 @@ namespace OceanAPI.NET6.Dtos
 
         [Required]
         public int ProductCategoryId { get; set; }
+
+        [Required]
+        public int CourseLevelId { get; set; }
     }
 }

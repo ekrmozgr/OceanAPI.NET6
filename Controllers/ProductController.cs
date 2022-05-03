@@ -32,19 +32,19 @@ namespace OceanAPI.NET6.Controllers
             return Ok(productDto);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<ActionResult> CreateProduct(ProductCreateDto productCreateDto)
         {
-            if (!Extensions.IsCurrentUser(productCreateDto.UserId, User))
-                return Forbid();
+            //if (!Extensions.IsCurrentUser(productCreateDto.UserId, User))
+              //  return Forbid();
             var product = _mapper.Map<Product>(productCreateDto);
             var response = await _productService.CreateProduct(product);
-            var productDto = _mapper.Map<ProductReadDto>(response);
+            var productDto = _mapper.Map<ProductCreateDto>(response);
             return Ok(productDto);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("category/{categoryId}")]
         public async Task<ActionResult> GetProductsByCategory(int categoryId)
         {

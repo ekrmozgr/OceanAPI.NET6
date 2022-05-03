@@ -5,8 +5,11 @@ namespace OceanAPI.NET6.Models
 {
     public enum ERoles
     {
+        [Display(Name = "User")]
         USER = 1,
+        [Display(Name = "Instructor")]
         INSTRUCTOR = 2,
+        [Display(Name = "Admin")]
         ADMIN = 3
     }
     public class Role
