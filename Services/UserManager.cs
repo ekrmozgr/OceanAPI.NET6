@@ -15,6 +15,8 @@ namespace OceanAPI.NET6.Services
             var existingUser = (await _userRepository.GetAllUsers()).SingleOrDefault(u=> u.Email.Equals(user.Email) || u.MobilePhone.Equals(user.MobilePhone));
             if (existingUser != null)
                 return null;
+            user.Basket = new Basket();
+            user.Favourites = new Favourites();
             return await _userRepository.AddUser(user);
         }
 

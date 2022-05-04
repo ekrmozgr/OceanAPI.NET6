@@ -28,5 +28,8 @@ namespace OceanAPI.NET6.Models
         [Column(TypeName = "nvarchar(20)")]
         public ECourseLevel CourseLevel { get; set; }
 
+        public List<Comments> Comments { get; set; }
+
+        public List<FavouritesProduct> FavouritesProducts { get; set; }
     }
 }

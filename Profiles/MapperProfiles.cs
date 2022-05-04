@@ -41,6 +41,11 @@ namespace OceanAPI.NET6.Profiles
             CreateMap<Role, EnumOptionReadDto>()
                 .ForMember(p => p.OptionName, x => x.MapFrom(a => a.ERole.GetDisplayName()))
                 .ForMember(p => p.OptionId, x => x.MapFrom(a => a.RoleId));
+
+            CreateMap<Comments, CommentsReadDto>();
+            CreateMap<CommentsCreateDto, Comments>();
+            CreateMap<Comments, CommentsCreateDto>();
+            CreateMap<Comments, CommentsUpdateDto>().ReverseMap();
         }
     }
 }

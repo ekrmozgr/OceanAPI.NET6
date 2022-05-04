@@ -19,6 +19,8 @@ namespace OceanAPI.NET6.Data
         public DbSet<FAQCategory> FaqCategories { get; set; }
         public DbSet<FAQ> Faq { get; set; }
         public DbSet<CourseLevel> CourseLevels { get; set; }
+        public DbSet<Comments> Comments { get; set; }
+        public DbSet<Favourites> Favorites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,12 +44,15 @@ namespace OceanAPI.NET6.Data
                 new CourseLevel { CourseLevelId = 2, ECourseLevel = ECourseLevel.ORTA });
             modelBuilder.Entity<CourseLevel>().HasData(
                 new CourseLevel { CourseLevelId = 3, ECourseLevel = ECourseLevel.ILERI });
-
+            
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, Email = "ekrem@outlook", Password = "Ekrem123.", Role = ERoles.ADMIN, Name = "eko", Surname = "ozgur", MobilePhone = "5076275287" });
             modelBuilder.Entity<Basket>().HasData(
-                new Basket { UserId = 1, ProductCount = 0, Price = 0 });
+                new Basket { UserId = 1 });
+            modelBuilder.Entity<Favourites>().HasData(
+                new Favourites { UserId = 1 });
 
+            
 
             modelBuilder.Entity<FAQCategory>().HasData(
                 new FAQCategory { FAQCategoryId = 1, FaqCategory = EFAQCategory.ABOUT_OUR_ONLINE_COURSES });

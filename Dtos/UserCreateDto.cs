@@ -19,7 +19,7 @@ namespace OceanAPI.NET6.Dtos
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [RegularExpression("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,15}$")]
+        //[RegularExpression("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,15}$")]
         public string Password { get; set; }
     }
 }
