@@ -14,19 +14,22 @@ namespace OceanAPI.NET6.Repositories
             _context = context;
             _dbSet = context.Set<Favourites>();
         }
-        public Task<Favourites> AddProduct(int id, FavouritesCreateDto favouritesDto)
+
+        public async Task<Favourites> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _dbSet.Include(x => x.FavouritesProducts).ThenInclude(fp => fp.Product).ThenInclude(p => p.User).SingleOrDefaultAsync(x =>x.UserId.Equals(id));
         }
 
-        public Task<Favourites> GetById(int id)
+        public async Task<Favourites> UpdateFavourites(Favourites favourites, int id)
         {
-            throw new NotImplementedException();
-        }
+            var model = await _dbSet.FindAsync(id);
+            if (model == null)
+                return null;
+            var response = _context.Entry(model);
+            response.State = EntityState.Modified;
 
-        public Task<Favourites> RemoveProduct(int id, int productId)
-        {
-            throw new NotImplementedException();
+            await _context.SaveChangesAsync();
+            return response.Entity;
         }
     }
 }

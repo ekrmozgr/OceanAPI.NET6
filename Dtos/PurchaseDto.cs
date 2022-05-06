@@ -2,13 +2,13 @@
 
 namespace OceanAPI.NET6.Dtos
 {
-    public class BasketProductCreateDto
+    public class PurchaseDto
     {
-        [Required]
-        public int ProductId { get; set; }
         [Required]
         public int BasketId { get; set; }
         [Required]
-        public int ProductQuantity { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
+
     }
 }

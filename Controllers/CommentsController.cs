@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OceanAPI.NET6.Dtos;
 using OceanAPI.NET6.Models;
@@ -18,6 +20,7 @@ namespace OceanAPI.NET6.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetCommentById(int id)
         {
@@ -25,6 +28,7 @@ namespace OceanAPI.NET6.Controllers
             return Ok(comment);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("users/{userId}")]
         public async Task<ActionResult> GetCommentByUser(int userId)
         {

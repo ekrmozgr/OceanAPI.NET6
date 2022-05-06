@@ -21,6 +21,10 @@ namespace OceanAPI.NET6.Data
         public DbSet<CourseLevel> CourseLevels { get; set; }
         public DbSet<Comments> Comments { get; set; }
         public DbSet<Favourites> Favorites { get; set; }
+        public DbSet<FavouritesProduct> FavouritesProducts { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,13 +50,20 @@ namespace OceanAPI.NET6.Data
                 new CourseLevel { CourseLevelId = 3, ECourseLevel = ECourseLevel.ILERI });
             
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Email = "ekrem@outlook", Password = "Ekrem123.", Role = ERoles.ADMIN, Name = "eko", Surname = "ozgur", MobilePhone = "5076275287" });
+                new User { UserId = 1, Email = "ekrem@outlook", Password = "Ekrem123.", Role = ERoles.ADMIN, Name = "Ekrem", Surname = "Ozgur", MobilePhone = "5076275287" });
             modelBuilder.Entity<Basket>().HasData(
                 new Basket { UserId = 1 });
             modelBuilder.Entity<Favourites>().HasData(
                 new Favourites { UserId = 1 });
 
-            
+            modelBuilder.Entity<User>().HasData(
+                new User { UserId = 2, Email = "hacer@outlook", Password = "Hacer123.", Role = ERoles.ADMIN, Name = "Hacer", Surname = "Durak", MobilePhone = "5550268550" });
+            modelBuilder.Entity<Basket>().HasData(
+                new Basket { UserId = 2 });
+            modelBuilder.Entity<Favourites>().HasData(
+                new Favourites { UserId = 2 });
+
+
 
             modelBuilder.Entity<FAQCategory>().HasData(
                 new FAQCategory { FAQCategoryId = 1, FaqCategory = EFAQCategory.ABOUT_OUR_ONLINE_COURSES });
@@ -115,6 +126,27 @@ namespace OceanAPI.NET6.Data
                 .WithMany(p => p.BasketProducts)
                 .HasForeignKey(bp => bp.BasketId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FavouritesProduct>().HasKey(bp => new { bp.FavouritesId, bp.ProductId });
+            modelBuilder.Entity<FavouritesProduct>()
+                .HasOne(fp => fp.Favourites)
+                .WithMany(p => p.FavouritesProducts)
+                .HasForeignKey(fp => fp.FavouritesId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Comments>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OrderProduct>().HasKey(bp => new { bp.OrderId, bp.ProductId });
+            modelBuilder.Entity<OrderProduct>()
+                .HasOne(op => op.Product)
+                .WithMany(p => p.OrderProducts)
+                .HasForeignKey(op => op.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

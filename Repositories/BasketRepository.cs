@@ -18,7 +18,7 @@ namespace OceanAPI.NET6.Repositories
         {
             if(await _dbSet.FindAsync(id) == null)
                 return null;
-            var basket = await _dbSet.Include(b => b.BasketProducts).ThenInclude(bp => bp.Product).Where(b => b.UserId.Equals(id)).FirstOrDefaultAsync();
+            var basket = await _dbSet.Include(b => b.BasketProducts).ThenInclude(bp => bp.Product).ThenInclude(p => p.User).Where(b => b.UserId.Equals(id)).FirstOrDefaultAsync();
             return basket;
         }
 

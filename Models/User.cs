@@ -20,8 +20,9 @@ namespace OceanAPI.NET6.Models
         [Column(TypeName = "nvarchar(20)")]
         public ERoles Role { get; set; }
         public Basket Basket { get; set; }
-        public List<Comments> Comments { get; set; }
-
         public Favourites Favourites { get; set; }
+        public List<Comments> Comments { get; set; }
+        public List<Coupon> Coupons { get; set; }
+        public List<Order> Orders { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace OceanAPI.NET6.Controllers
             if(response == null)
                 return BadRequest();
             var userDto = _mapper.Map<User,UserReadDto>(user);
-            return Ok(userDto);
+            return Created(nameof(GetUser), userDto);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

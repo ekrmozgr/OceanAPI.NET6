@@ -2,7 +2,7 @@
 
 namespace OceanAPI.NET6.Dtos
 {
-    public class BasketDto
+    public class BasketReadDto
     {
         public int UserId { get; set; }
         public decimal Price { get; set; }

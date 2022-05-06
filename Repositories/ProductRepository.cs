@@ -18,6 +18,7 @@ namespace OceanAPI.NET6.Repositories
         {
             await _dbSet.AddAsync(product);
             await _context.SaveChangesAsync();
+            await _context.Entry(product).Reference(p => p.User).LoadAsync();
             return product;
         }
 

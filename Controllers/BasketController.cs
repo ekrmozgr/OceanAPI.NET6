@@ -21,42 +21,47 @@ namespace OceanAPI.NET6.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("{basketId}")]
-        public async Task<ActionResult> GetBasket(int basketId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetBasket(int id)
         {
-            if (!Extensions.IsCurrentUser(basketId, User))
+            if (!Extensions.IsCurrentUser(id, User))
                 return Forbid();
-            var basket = await _basketTransactionService.GetBasket(basketId);
+            var basket = await _basketTransactionService.GetBasket(id);
             if (basket == null)
                 return NotFound();
-            var basketDto = _mapper.Map<Basket,BasketDto>(basket);
+            var basketDto = _mapper.Map<Basket,BasketReadDto>(basket);
             return Ok(basketDto);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPost("{id}/products")]
-        public async Task<ActionResult> AddProduct(int id, BasketProductCreateDto basketProductCreateDto)
+        [HttpPost("products")]
+        public async Task<ActionResult> AddProduct(BasketProductCreateDto basketProductCreateDto)
         {
+            int id = basketProductCreateDto.BasketId;
             if (!Extensions.IsCurrentUser(id, User))
                 return Forbid();
-            var response = await _basketTransactionService.AddProduct(id, basketProductCreateDto);
+            var basketProduct = _mapper.Map<BasketProductCreateDto,BasketProduct>(basketProductCreateDto);
+            var response = await _basketTransactionService.AddProduct(basketProduct);
             if (response == null)
                 return BadRequest();
-            var basketDto = _mapper.Map<Basket, BasketDto>(response);
-            return Ok(basketDto);
+            return Ok(basketProductCreateDto);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpPut("{id}/products")]
-        public async Task<ActionResult> ChangeProduct(int id, BasketProductCreateDto basketProductCreateDto)
+        [HttpPut("products")]
+        public async Task<ActionResult> ChangeProductQuantity(BasketProductCreateDto basketProductCreateDto)
         {
+            int id = basketProductCreateDto.BasketId;
             if (!Extensions.IsCurrentUser(id, User))
                 return Forbid();
-            var response = await _basketTransactionService.ChangeProduct(id, basketProductCreateDto);
+            var existingBasketProduct = await _basketTransactionService.GetBasketProduct(id, basketProductCreateDto.ProductId);
+            if(existingBasketProduct == null)
+                return NotFound();
+            var basketProduct = _mapper.Map(basketProductCreateDto, existingBasketProduct);
+            var response = await _basketTransactionService.ChangeProduct(basketProduct);
             if (response == null)
                 return BadRequest();
-            var basketDto = _mapper.Map<Basket, BasketDto>(response);
-            return Ok(basketDto);
+            return Ok(basketProductCreateDto);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -68,8 +73,22 @@ namespace OceanAPI.NET6.Controllers
             var response = await _basketTransactionService.RemoveProduct(id, productId);
             if (response == null)
                 return BadRequest();
-            var basketDto = _mapper.Map<Basket, BasketDto>(response);
-            return Ok(basketDto);
+            var basketProductDto = _mapper.Map<BasketProduct, BasketProductCreateDto>(response);
+            return Ok(basketProductDto);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("purchase")]
+        public async Task<ActionResult> PurchaseBasket(PurchaseDto purchaseDto)
+        {
+            if (!Extensions.IsCurrentUser(purchaseDto.BasketId, User))
+                return Forbid();
+            var basket = await _basketTransactionService.GetBasket(purchaseDto.BasketId);
+            if(basket == null)
+                return NotFound();
+            var response = await _basketTransactionService.PurchaseBasket(basket, purchaseDto);
+            var orderPurchaseDto = _mapper.Map<Order,OrderPurchaseDto>(response);
+            return Ok(orderPurchaseDto);
         }
     }
 }

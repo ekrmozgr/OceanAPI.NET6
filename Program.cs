@@ -78,6 +78,8 @@ builder.Services.AddScoped(typeof(ICompanyContactRepository), typeof(CompanyCont
 builder.Services.AddScoped(typeof(IEnumRepository<>), typeof(EnumRepository<>));
 builder.Services.AddScoped(typeof(ICommentsRepository), typeof(CommentsRepository));
 builder.Services.AddScoped(typeof(IFavouritesRepository),typeof(FavouritesRepository));
+builder.Services.AddScoped(typeof(ICouponRepository), typeof(CouponRepository));
+builder.Services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
 
 // services
 builder.Services.AddScoped<ILoginService,LoginManager>();
@@ -89,6 +91,8 @@ builder.Services.AddScoped<IInfoService, InfoManager>();
 builder.Services.AddScoped<IEnumService, EnumManager>();
 builder.Services.AddScoped<ICommentsService, CommentsManager>();
 builder.Services.AddScoped<IFavouritesService, FavouritesManager>();
+builder.Services.AddScoped<ICouponService, CouponManager>();
+builder.Services.AddScoped<IOrderService, OrderManager>();
 
 // automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

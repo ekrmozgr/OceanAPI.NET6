@@ -31,5 +31,6 @@ namespace OceanAPI.NET6.Models
         public List<Comments> Comments { get; set; }
 
         public List<FavouritesProduct> FavouritesProducts { get; set; }
+        public List<OrderProduct> OrderProducts { get; set; }
     }
 }
