@@ -118,7 +118,11 @@ namespace OceanAPI.NET6.Data
             modelBuilder.Entity<ProductCategory>().HasData(
                new ProductCategory { ProductCategoryId = 13, ProductCategorys = EProductCategory.MOBILE_DEVELOPER });
 
-
+            modelBuilder.Entity<Product>().Property(b => b.Price).HasPrecision(5, 2);
+            modelBuilder.Entity<Product>().Property(b => b.DiscountPrice).HasPrecision(5, 2);
+            modelBuilder.Entity<Basket>().Property(b => b.Price).HasPrecision(5, 2);
+            modelBuilder.Entity<Order>().Property(b => b.Price).HasPrecision(5, 2);
+            modelBuilder.Entity<OrderProduct>().Property(b => b.ProductPrice).HasPrecision(5, 2);
 
             modelBuilder.Entity<BasketProduct>().HasKey(bp => new { bp.BasketId, bp.ProductId });
             modelBuilder.Entity<BasketProduct>()
@@ -134,12 +138,6 @@ namespace OceanAPI.NET6.Data
                 .HasForeignKey(fp => fp.FavouritesId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Comments>()
-                .HasOne(c => c.User)
-                .WithMany(u => u.Comments)
-                .HasForeignKey(c => c.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<OrderProduct>().HasKey(bp => new { bp.OrderId, bp.ProductId });
             modelBuilder.Entity<OrderProduct>()
                 .HasOne(op => op.Product)
@@ -147,6 +145,17 @@ namespace OceanAPI.NET6.Data
                 .HasForeignKey(op => op.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Comments>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Coupon>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Coupons)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

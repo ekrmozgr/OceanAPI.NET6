@@ -5,6 +5,7 @@ namespace OceanAPI.NET6.Dtos
     public class CommentsUpdateDto
     {
         [Required]
+        [Range(1, int.MaxValue)]
         public int Id { get; set; }
 
         [Required]

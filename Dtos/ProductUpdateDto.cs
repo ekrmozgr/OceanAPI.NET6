@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using OceanAPI.NET6.Models;
 namespace OceanAPI.NET6.Dtos
 {
     public class ProductUpdateDto
     {
         [Required]
+        [Range(1, int.MaxValue)]
         public int ProductId { get; set; }
 
         [Required]
@@ -24,17 +25,21 @@ namespace OceanAPI.NET6.Dtos
         public string Explanation { get; set; }
 
         [Required]
+        [Range(typeof(Int32), "0", "500")]
         //[RegularExpression("0 | ^[1-9][0-9]*$")]
         public string CourseHourDuration { get; set; }
 
         [Required]
+        [Range(typeof(Int32), "0", "59")]
         //[RegularExpression("0 | ^[1-9][0-9]*$")]
         public string CourseMinuteDuration { get; set; }
 
         [Required]
+        [Range(1, 13)]
         public int ProductCategoryId { get; set; }
 
         [Required]
+        [Range(1, 3)]
         public int CourseLevelId { get; set; }
     }
 }
