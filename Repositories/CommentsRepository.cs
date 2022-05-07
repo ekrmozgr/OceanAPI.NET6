@@ -44,12 +44,17 @@ namespace OceanAPI.NET6.Repositories
 
         public async Task<Comments> GetCommentById(int id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.Include(x => x.User).Include(x => x.Product).FirstOrDefaultAsync(x => x.Id.Equals(id));
+        }
+
+        public async Task<List<Comments>> GetCommentsByProduct(int productId)
+        {
+            return await _dbSet.Include(x => x.User).Where(x => x.ProductId.Equals(productId)).ToListAsync();
         }
 
         public async Task<List<Comments>> GetCommentsByUser(int userId)
         {
-            return await _dbSet.Where(x => x.UserId.Equals(userId)).Include(x => x.Product).ToListAsync();
+            return await _dbSet.Where(x => x.UserId.Equals(userId)).Include(x => x.Product).Include(x => x.User).ToListAsync();
         }
     }
 }

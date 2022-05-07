@@ -39,15 +39,6 @@ namespace OceanAPI.NET6.Profiles
                 .ForMember(p => p.ProductCategory, x => x.MapFrom(pu => (EProductCategory)pu.ProductCategoryId))
                 .ForMember(p => p.CourseLevel, x => x.MapFrom(pu => (ECourseLevel)pu.CourseLevelId));
             CreateMap<Product, ProductCreateDto>();
-
-
-            
-
-
-
-
-
-
             CreateMap<Comments, CommentsReadDto>();
             CreateMap<CommentsCreateDto, Comments>();
             CreateMap<Comments, CommentsCreateDto>();

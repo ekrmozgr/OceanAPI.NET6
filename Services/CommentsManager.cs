@@ -16,9 +16,8 @@ namespace OceanAPI.NET6.Services
             return await _commentsRepository.AddComment(comment);
         }
 
-        public async Task<Comments> DeleteComment(int id)
+        public async Task<Comments> DeleteComment(Comments comment)
         {
-            var comment = await _commentsRepository.GetCommentById(id);
             return await _commentsRepository.DeleteComment(comment);
         }
 
@@ -30,6 +29,11 @@ namespace OceanAPI.NET6.Services
         public async Task<Comments> GetCommentById(int id)
         {
             return await _commentsRepository.GetCommentById(id);
+        }
+
+        public async Task<List<Comments>> GetCommentsByProductId(int productId)
+        {
+            return await _commentsRepository.GetCommentsByProduct(productId);
         }
 
         public async Task<List<Comments>> GetCommentsByUserId(int userId)

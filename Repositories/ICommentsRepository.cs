@@ -6,6 +6,7 @@ namespace OceanAPI.NET6.Repositories
     {
         Task<Comments> AddComment(Comments comment);
         Task<List<Comments>> GetCommentsByUser(int userId);
+        Task<List<Comments>> GetCommentsByProduct(int productId);
         Task<Comments> EditComment(Comments comment, int id);
         Task<Comments> DeleteComment(Comments comments);
         Task<Comments> GetCommentById(int id);

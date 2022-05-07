@@ -25,42 +25,70 @@ namespace OceanAPI.NET6.Controllers
         public async Task<ActionResult> GetCommentById(int id)
         {
             var comment = await _commentsService.GetCommentById(id);
-            return Ok(comment);
+            if (comment == null)
+                return NotFound();
+            if (!Extensions.IsCurrentUser(comment.UserId, User))
+                return Forbid();
+            var commentDto = _mapper.Map<Comments, CommentsReadDto>(comment);
+            return Ok(commentDto);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("users/{userId}")]
-        public async Task<ActionResult> GetCommentByUser(int userId)
+        public async Task<ActionResult> GetCommentsByUser(int userId)
         {
+            if (!Extensions.IsCurrentUser(userId, User))
+                return Forbid();
             var comments = await _commentsService.GetCommentsByUserId(userId);
-            return Ok(comments);
+            var commentsDto = _mapper.Map<List<Comments>,List<CommentsReadDto>>(comments);
+            return Ok(commentsDto);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("products/{productId}")]
+        public async Task<ActionResult> GetCommentsByProduct(int productId)
+        {
+            var comments = await _commentsService.GetCommentsByProductId(productId);
+            var commentsDto = _mapper.Map<List<Comments>, List<CommentsReadDto>>(comments);
+            return Ok(commentsDto);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost]
         public async Task<ActionResult> CreateComment(CommentsCreateDto commentCreateDto)
         {
+            if (!Extensions.IsCurrentUser(commentCreateDto.UserId, User))
+                return Forbid();
             var comment = _mapper.Map<CommentsCreateDto,Comments>(commentCreateDto);
-            var response = await _commentsService.AddComment(comment);
-            var responseDto = _mapper.Map<Comments,CommentsCreateDto>(response);
-            return Ok(responseDto);
+            await _commentsService.AddComment(comment);
+            return Ok(commentCreateDto);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> EditComment(int id, CommentsUpdateDto commentsUpdateDto)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut]
+        public async Task<ActionResult> EditComment(CommentsUpdateDto commentsUpdateDto)
         {
-            var existingComment = await _commentsService.GetCommentById(id);
+            var existingComment = await _commentsService.GetCommentById(commentsUpdateDto.Id);
             if (existingComment == null)
                 return NotFound();
+            if (!Extensions.IsCurrentUser(existingComment.UserId, User))
+                return Forbid();
             var comment = _mapper.Map(commentsUpdateDto, existingComment);
-            await _commentsService.EditComment(comment, id);
+            await _commentsService.EditComment(comment, commentsUpdateDto.Id);
             var commentDto = _mapper.Map<CommentsUpdateDto>(comment);
             return Ok(commentDto);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteComment(int id)
         {
-            var comment = await _commentsService.DeleteComment(id);
+            var comment = await _commentsService.GetCommentById(id);
+            if(comment == null)
+                return NotFound();
+            if (!Extensions.IsCurrentUser(comment.UserId, User) && !User.IsInRole("ADMIN"))
+                return Forbid();
+            await _commentsService.DeleteComment(comment);
             var commentDto = _mapper.Map<CommentsUpdateDto>(comment);
             return Ok(commentDto);
         }
