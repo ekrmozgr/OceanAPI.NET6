@@ -22,7 +22,7 @@ namespace OceanAPI.NET6.Repositories
 
         public async Task<List<Order>> GetOrdersByUserId(int userId)
         {
-            return await _dbSet.Include(x => x.OrderProducts).ThenInclude(op => op.Product).Where(x => x.UserId.Equals(userId)).ToListAsync();
+            return await _dbSet.Include(x => x.OrderProducts).ThenInclude(op => op.Product).Include(x => x.User).Where(x => x.UserId.Equals(userId)).ToListAsync();
         }
     }
 }

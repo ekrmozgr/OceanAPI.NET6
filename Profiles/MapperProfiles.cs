@@ -43,6 +43,8 @@ namespace OceanAPI.NET6.Profiles
             CreateMap<CommentsCreateDto, Comments>();
             CreateMap<Comments, CommentsCreateDto>();
             CreateMap<Comments, CommentsUpdateDto>().ReverseMap();
+            CreateMap<Order, OrderReadDto>();
+            CreateMap<OrderProduct, OrderProductReadDto>();
         }
     }
 }
