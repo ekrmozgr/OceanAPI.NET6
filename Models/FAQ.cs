@@ -6,7 +6,6 @@ namespace OceanAPI.NET6.Models
     public class FAQ
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FAQId { get; set; }
         public string Question { get; set; }
         public string Answer { get; set; }

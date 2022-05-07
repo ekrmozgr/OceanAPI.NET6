@@ -12,10 +12,10 @@ namespace OceanAPI.NET6.Models
         [Required]
         public string CouponCode { get; set; }
 
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         public User User;
 
-        public int? ProductId { get; set; }
+        public int ProductId { get; set; }
         public Product Product { get; set; }
     }
 }

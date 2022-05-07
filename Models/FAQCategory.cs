@@ -21,7 +21,6 @@ namespace OceanAPI.NET6.Models
     public class FAQCategory
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int FAQCategoryId { get; set; }
 
         [Column(TypeName = "nvarchar(40)")]

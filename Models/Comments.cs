@@ -13,12 +13,7 @@ namespace OceanAPI.NET6.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
-
-        [Required]
         public DateTime DateOfComment { get; set; }
-
-        [Required]
-        [StringLength(500, MinimumLength = 3)]
         public string Comment { get; set; }
 
         public int UserId { get; set; }
