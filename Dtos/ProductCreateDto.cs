@@ -26,12 +26,10 @@ namespace OceanAPI.NET6.Dtos
 
         [Required]
         [Range(typeof(Int32), "0", "500")]
-        //[RegularExpression("0 | ^[1-9][0-9]*$")]
         public string CourseHourDuration { get; set; }
 
         [Required]
         [Range(typeof(Int32), "0", "59")]
-        //[RegularExpression("0 | ^[1-9][0-9]*$")]
         public string CourseMinuteDuration { get; set; }
 
         [Required]
@@ -41,5 +39,8 @@ namespace OceanAPI.NET6.Dtos
         [Required]
         [Range(1, 3)]
         public int CourseLevelId { get; set; }
+
+        [Required]
+        public string Base64Image { get; set; }
     }
 }

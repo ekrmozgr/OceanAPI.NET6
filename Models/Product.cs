@@ -32,5 +32,7 @@ namespace OceanAPI.NET6.Models
 
         public List<FavouritesProduct> FavouritesProducts { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
+
+        public byte[] Image { get; set; }
     }
 }

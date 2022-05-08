@@ -14,7 +14,8 @@ namespace OceanAPI.NET6.Profiles
             CreateMap<BasketProduct, BasketProductReadDto>();
             CreateMap<Product, ProductReadDto>()
                 .ForMember(p => p.CategoryName, x => x.MapFrom(a => a.ProductCategory.GetDisplayName()))
-                .ForMember(p => p.CourseLevel, x => x.MapFrom(a => a.CourseLevel.GetDisplayName()));
+                .ForMember(p => p.CourseLevel, x => x.MapFrom(a => a.CourseLevel.GetDisplayName()))
+                .ForMember(p => p.Base64Image, x => x.MapFrom(a => Convert.ToBase64String(a.Image)));
             CreateMap<User, UserInProductReadDto>();
             CreateMap<BasketProductCreateDto, BasketProduct>().ReverseMap();
             CreateMap<Order, OrderPurchaseDto>();
@@ -34,11 +35,14 @@ namespace OceanAPI.NET6.Profiles
             CreateMap<FavouritesProduct, FavouritesProductReadDto>();
             CreateMap<ProductUpdateDto, Product>()
                 .ForMember(p => p.ProductCategory, x => x.MapFrom(pu => (EProductCategory)pu.ProductCategoryId))
-                .ForMember(p => p.CourseLevel, x => x.MapFrom(pu => (ECourseLevel)pu.CourseLevelId));
+                .ForMember(p => p.CourseLevel, x => x.MapFrom(pu => (ECourseLevel)pu.CourseLevelId))
+                .ForMember(p => p.Image, x => x.MapFrom(pu => Convert.FromBase64String(pu.Base64Image)));
             CreateMap<ProductCreateDto, Product>()
                 .ForMember(p => p.ProductCategory, x => x.MapFrom(pu => (EProductCategory)pu.ProductCategoryId))
-                .ForMember(p => p.CourseLevel, x => x.MapFrom(pu => (ECourseLevel)pu.CourseLevelId));
-            CreateMap<Product, ProductCreateDto>();
+                .ForMember(p => p.CourseLevel, x => x.MapFrom(pu => (ECourseLevel)pu.CourseLevelId))
+                .ForMember(p => p.Image, x => x.MapFrom(pu => Convert.FromBase64String(pu.Base64Image)));
+            CreateMap<Product, ProductCreateDto>()
+                .ForMember(p => p.Base64Image, x => x.MapFrom(a => Convert.ToBase64String(a.Image)));
             CreateMap<Comments, CommentsReadDto>();
             CreateMap<CommentsCreateDto, Comments>();
             CreateMap<Comments, CommentsCreateDto>();

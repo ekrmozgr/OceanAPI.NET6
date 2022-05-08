@@ -19,5 +19,6 @@ namespace OceanAPI.NET6.Dtos
         public int CourseLevelId { get; set; }
         public string CourseLevel { get; set; }
         public UserInProductReadDto User { get; set; }
+        public string Base64Image { get; set; }
     }
 }
