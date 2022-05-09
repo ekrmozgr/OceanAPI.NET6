@@ -28,5 +28,17 @@ namespace OceanAPI.NET6.Controllers
             var token = _loginService.GenerateToken(user);
             return Ok(token);
         }
+
+        [AllowAnonymous]
+        [HttpPost("forgottenpw")]
+        public async Task<ActionResult> ForgottenPassword(ForgottenPasswordDto forgottenPasswordDto)
+        {
+            var user = await _loginService.GetUserByEmail(forgottenPasswordDto.Email);
+            if (user == null)
+                return NotFound();
+            string body = "Ocean App Şifreniz : " + user.Password;
+            await Extensions.Email("Forgotten Password", body, forgottenPasswordDto.Email);
+            return Ok();
+        }
     }
 }

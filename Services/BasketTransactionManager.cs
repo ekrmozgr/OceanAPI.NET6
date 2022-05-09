@@ -77,24 +77,33 @@ namespace OceanAPI.NET6.Services
 
         public async Task<Order> PurchaseBasket(Basket basket, PurchaseDto purchaseDto)
         {
+            if (basket.BasketProducts.Count() == 0)
+                return null;
             var order = new Order();
             order.Price = basket.Price;
             order.UserId = basket.UserId;
             order.RecipientMail = purchaseDto.Email;
             order.OrderProducts = new List<OrderProduct>();
+            string messageBody = order.DateOfOrder.ToLongDateString();
+            messageBody+= "\n\nCoupons :\n\n";
             foreach (var basketProduct in basket.BasketProducts)
             {
                 int productId = basketProduct.ProductId;
+                messageBody += basketProduct.Product.Name + "\n\n";
                 order.OrderProducts.Add(new OrderProduct { ProductId = productId, ProductQuantity = basketProduct.ProductQuantity, ProductPrice = basketProduct.Product.DiscountPrice });
                 for(int i = 0; i < basketProduct.ProductQuantity; i++)
                 {
-                    await _couponService.AddCoupon(new Coupon { ProductId = productId, UserId = basket.UserId, CouponCode = _couponService.GenerateCoupon() });
+                    var coupon = new Coupon { ProductId = productId, UserId = basket.UserId, CouponCode = _couponService.GenerateCoupon() };
+                    await _couponService.AddCoupon(coupon);
+                    messageBody += coupon.CouponCode + "\n";
                 }
+                messageBody += "\n\n";
             }
             basket.Price = 0;
             basket.ProductCount = 0;
             basket.BasketProducts.Clear();
             await _basketService.UpdateById(basket, basket.UserId);
+            await Extensions.Email("Ocean App Courses Coupons", messageBody, purchaseDto.Email);
             return await _orderService.AddOrder(order);
         }
 

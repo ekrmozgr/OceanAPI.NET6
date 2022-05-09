@@ -45,5 +45,11 @@ namespace OceanAPI.NET6.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            User? user = (await _userRepository.GetAllUsers()).FirstOrDefault(x => x.Email.Equals(email));
+            return user;
+        }
     }
 }

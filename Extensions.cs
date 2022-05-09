@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Net.Mail;
 using System.Reflection;
 using System.Security.Claims;
 
@@ -47,5 +49,28 @@ namespace OceanAPI.NET6
 
             throw new ArgumentOutOfRangeException(nameof(name));
         }
+
+        public static async Task Email(string subject, string body, string toMailAddress)
+        {
+            try
+            {
+                MailMessage message = new MailMessage();
+                SmtpClient smtp = new SmtpClient();
+                message.From = new MailAddress("ocean8741@gmail.com");
+                message.To.Add(new MailAddress(toMailAddress));
+                message.Subject = subject;
+                message.IsBodyHtml = false; //to make message body as html  
+                message.Body = body;
+                smtp.Port = 587;
+                smtp.Host = "smtp.gmail.com"; //for gmail host  
+                smtp.EnableSsl = true;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential("ocean8741@gmail.com", "ekrem123");
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                await smtp.SendMailAsync(message);
+            }
+            catch (Exception) { }
+        }
+
     }
 }

@@ -7,5 +7,6 @@ namespace OceanAPI.NET6.Services
     {
         Task<User> Authenticate(UserLoginDto userLogin);
         string GenerateToken(User user);
+        Task<User> GetUserByEmail(string email);
     }
 }

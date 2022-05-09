@@ -87,6 +87,8 @@ namespace OceanAPI.NET6.Controllers
             if(basket == null)
                 return NotFound();
             var response = await _basketTransactionService.PurchaseBasket(basket, purchaseDto);
+            if (response == null)
+                return BadRequest();
             var orderPurchaseDto = _mapper.Map<Order,OrderPurchaseDto>(response);
             return Ok(orderPurchaseDto);
         }
