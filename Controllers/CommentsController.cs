@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using OceanAPI.NET6.Dtos;
 using OceanAPI.NET6.Models;
 using OceanAPI.NET6.Services;
@@ -14,10 +15,13 @@ namespace OceanAPI.NET6.Controllers
     {
         private readonly ICommentsService _commentsService;
         private readonly IMapper _mapper;
-        public CommentsController(ICommentsService commentsService, IMapper mapper)
+        private IMemoryCache _cache;
+
+        public CommentsController(ICommentsService commentsService, IMapper mapper, IMemoryCache cache)
         {
             _commentsService = commentsService;
             _mapper = mapper;
+            _cache = cache;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -61,6 +65,8 @@ namespace OceanAPI.NET6.Controllers
                 return Forbid();
             var comment = _mapper.Map<CommentsCreateDto,Comments>(commentCreateDto);
             await _commentsService.AddComment(comment);
+            string cacheKey = "product" + comment.UserId;
+            _cache.Remove(cacheKey);
             return Ok(commentCreateDto);
         }
 
@@ -76,6 +82,8 @@ namespace OceanAPI.NET6.Controllers
             var comment = _mapper.Map(commentsUpdateDto, existingComment);
             await _commentsService.EditComment(comment, commentsUpdateDto.Id);
             var commentDto = _mapper.Map<CommentsUpdateDto>(comment);
+            string cacheKey = "product" + comment.UserId;
+            _cache.Remove(cacheKey);
             return Ok(commentDto);
         }
 
@@ -90,6 +98,8 @@ namespace OceanAPI.NET6.Controllers
                 return Forbid();
             await _commentsService.DeleteComment(comment);
             var commentDto = _mapper.Map<CommentsUpdateDto>(comment);
+            string cacheKey = "product" + comment.UserId;
+            _cache.Remove(cacheKey);
             return Ok(commentDto);
         }
 

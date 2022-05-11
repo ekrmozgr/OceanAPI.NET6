@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using OceanAPI.NET6.Dtos;
 using OceanAPI.NET6.Models;
 using OceanAPI.NET6.Services;
@@ -13,11 +14,13 @@ namespace OceanAPI.NET6.Controllers
     public class FavouritesController : ControllerBase
     {
         private readonly IFavouritesService _favouritesService;
+        private IMemoryCache _cache;
         private readonly IMapper _mapper;
-        public FavouritesController(IFavouritesService favouritesService, IMapper mapper)
+        public FavouritesController(IFavouritesService favouritesService, IMapper mapper, IMemoryCache cache)
         {
             _favouritesService = favouritesService;
             _mapper = mapper;
+            _cache = cache;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -26,9 +29,20 @@ namespace OceanAPI.NET6.Controllers
         {
             if (!Extensions.IsCurrentUser(id, User))
                 return Forbid();
-            var favourites = await _favouritesService.GetFavouritesById(id);
-            if (favourites == null)
-                return NotFound();
+
+            string cacheKey = "favourites" + id;
+            Favourites favourites;
+            if (!_cache.TryGetValue(cacheKey, out favourites))
+            {
+                favourites = await _favouritesService.GetFavouritesById(id);
+                if (favourites == null)
+                    return NotFound();
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(15))
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(1))
+                    .SetPriority(CacheItemPriority.Normal);
+                _cache.Set(cacheKey, favourites, cacheEntryOptions);
+            }
             var favouritesDto = _mapper.Map<Favourites,FavouritesReadDto>(favourites);
             return Ok(favouritesDto);
         }
@@ -43,6 +57,8 @@ namespace OceanAPI.NET6.Controllers
             var favourites = await _favouritesService.AddProduct(favouritesProduct);
             if (favourites == null)
                 return BadRequest();
+            string cacheKey = "favourites" + favourites.UserId;
+            _cache.Remove(cacheKey);
             return Ok(favouritesCreateDto);
         }
 
@@ -56,6 +72,8 @@ namespace OceanAPI.NET6.Controllers
             if (favouritesProduct == null)
                 return BadRequest();
             var favouritesProductDto = _mapper.Map<FavouritesProduct, FavouritesCreateDto>(favouritesProduct);
+            string cacheKey = "favourites" + id;
+            _cache.Remove(cacheKey);
             return Ok(favouritesProductDto);
 
         }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using OceanAPI.NET6.Dtos;
 using OceanAPI.NET6.Models;
 using OceanAPI.NET6.Services;
@@ -14,10 +15,13 @@ namespace OceanAPI.NET6.Controllers
     {
         private readonly IBasketTransactionService _basketTransactionService;
         private readonly IMapper _mapper;
-        public BasketController(IBasketTransactionService basketTransactionService, IMapper mapper)
+        private IMemoryCache _cache;
+
+        public BasketController(IBasketTransactionService basketTransactionService, IMapper mapper, IMemoryCache cache)
         {
             _mapper = mapper;
             _basketTransactionService = basketTransactionService;
+            _cache = cache;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -90,6 +94,10 @@ namespace OceanAPI.NET6.Controllers
             if (response == null)
                 return BadRequest();
             var orderPurchaseDto = _mapper.Map<Order,OrderPurchaseDto>(response);
+            string cacheKey = "orders" + basket.UserId;
+            _cache.Remove(cacheKey);
+            string cacheKey2 = "coupons" + basket.UserId;
+            _cache.Remove(cacheKey2);
             return Ok(orderPurchaseDto);
         }
     }

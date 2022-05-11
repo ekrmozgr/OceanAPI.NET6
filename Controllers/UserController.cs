@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using OceanAPI.NET6.Dtos;
 using OceanAPI.NET6.Models;
 using OceanAPI.NET6.Services;
@@ -14,11 +15,13 @@ namespace OceanAPI.NET6.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private IMemoryCache _cache;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper, IMemoryCache cache)
         {
             _userService = userService;
             _mapper = mapper;
+            _cache = cache;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -27,9 +30,19 @@ namespace OceanAPI.NET6.Controllers
         {
             if (!Extensions.IsCurrentUser(id, User))
                 return Forbid();
-            var user = await _userService.GetUserById(id);
-            if(user == null)
-                return NotFound();
+            string cacheKey = "user" + id;
+            User user;
+            if (!_cache.TryGetValue(cacheKey, out user))
+            {
+                user = await _userService.GetUserById(id);
+                if (user == null)
+                    return NotFound();
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(20))
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(1))
+                    .SetPriority(CacheItemPriority.Normal);
+                _cache.Set(cacheKey, user, cacheEntryOptions);
+            }
             var userDto = _mapper.Map<User, UserReadDto>(user);
             return Ok(userDto);
         }
@@ -57,6 +70,8 @@ namespace OceanAPI.NET6.Controllers
                 return NotFound();
             var user = _mapper.Map(createUserDto, existingUser);
             await _userService.UpdateUser(user, id);
+            string cacheKey = "user" + id;
+            _cache.Remove(cacheKey);
             var userDto = _mapper.Map<UserReadDto>(user);
             return Ok(userDto);
         }
