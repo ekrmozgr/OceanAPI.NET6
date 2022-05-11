@@ -156,6 +156,14 @@ namespace OceanAPI.NET6.Data
                 .WithMany(u => u.Coupons)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.MobilePhone)
+                .IsUnique();
         }
     }
 }
