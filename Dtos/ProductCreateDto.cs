@@ -41,6 +41,14 @@ namespace OceanAPI.NET6.Dtos
         public int CourseLevelId { get; set; }
 
         [Required]
+        public string CompanyName { get; set; }
+
+        [Required]
+        public string CompanyWebsite { get; set; }
+
+        [Required]
         public string Base64Image { get; set; }
+
+
     }
 }

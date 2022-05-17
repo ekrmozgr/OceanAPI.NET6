@@ -5,6 +5,10 @@ namespace OceanAPI.NET6.Models
 {
     public class Product
     {
+        public Product()
+        {
+            isAvailable = true;
+        }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int ProductId { get; set; }
@@ -34,5 +38,10 @@ namespace OceanAPI.NET6.Models
         public List<OrderProduct> OrderProducts { get; set; }
 
         public byte[] Image { get; set; }
+
+        public bool isAvailable { get; set; }
+
+        public string CompanyName { get; set; }
+        public string CompanyWebsite { get; set; }
     }
 }

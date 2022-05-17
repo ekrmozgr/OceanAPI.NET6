@@ -25,6 +25,8 @@ namespace OceanAPI.NET6.Services
             var product = await _productService.GetProduct(basketProduct.ProductId);
             if (product == null)
                 return null;
+            if(!product.isAvailable)
+                return null;
             if(basket.BasketProducts.FirstOrDefault(b => b.ProductId.Equals(basketProduct.ProductId)) != null)
                 return null;
             basket.BasketProducts.Add(basketProduct);
@@ -84,17 +86,19 @@ namespace OceanAPI.NET6.Services
             order.UserId = basket.UserId;
             order.RecipientMail = purchaseDto.Email;
             order.OrderProducts = new List<OrderProduct>();
+            order.Coupons = new List<Coupon>();
             string messageBody = order.DateOfOrder.ToLongDateString();
             messageBody+= "\n\nCoupons :\n\n";
             foreach (var basketProduct in basket.BasketProducts)
             {
                 int productId = basketProduct.ProductId;
+                messageBody += basketProduct.Product.CompanyName + "\n" + basketProduct.Product.CompanyWebsite + "\n\n";
                 messageBody += basketProduct.Product.Name + "\n\n";
                 order.OrderProducts.Add(new OrderProduct { ProductId = productId, ProductQuantity = basketProduct.ProductQuantity, ProductPrice = basketProduct.Product.DiscountPrice });
                 for(int i = 0; i < basketProduct.ProductQuantity; i++)
                 {
                     var coupon = new Coupon { ProductId = productId, UserId = basket.UserId, CouponCode = _couponService.GenerateCoupon() };
-                    await _couponService.AddCoupon(coupon);
+                    order.Coupons.Add(coupon);
                     messageBody += coupon.CouponCode + "\n";
                 }
                 messageBody += "\n\n";

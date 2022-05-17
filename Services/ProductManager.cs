@@ -33,6 +33,19 @@ namespace OceanAPI.NET6.Services
             return await _productRepository.GetProductsByUser(userId);
         }
 
+        public async Task<Product> RemoveProduct(int id)
+        {
+            var product = await _productRepository.GetProductForRemove(id);
+            if(product == null)
+                return null;
+            if (product.isAvailable == false)
+                return null;
+            product.isAvailable = false;
+            product.BasketProducts.Clear();
+            product.FavouritesProducts.Clear();
+            return await _productRepository.UpdateProduct(product, id);
+        }
+
         public async Task<Product> UpdateProduct(Product product, int id)
         {
             decimal discount = product.Price * product.DiscountPercent / 100;

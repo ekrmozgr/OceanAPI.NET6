@@ -28,5 +28,7 @@ namespace OceanAPI.NET6.Models
 
         [Required]
         public string RecipientMail { get; set; }
+
+        public List<Coupon> Coupons { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using OceanAPI.NET6.Services;
 
 namespace OceanAPI.NET6.Controllers
 {
-    [Route("api/Options")]
+    [Route("api/options")]
     [ApiController]
     public class OptionsController : ControllerBase
     {

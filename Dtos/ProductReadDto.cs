@@ -5,6 +5,7 @@ namespace OceanAPI.NET6.Dtos
 {
     public class ProductReadDto
     {
+        public bool isAvailable { get; set; }
         public int ProductId { get; set; }
         public int UserId { get; set; }
         public string Name { get; set; }
@@ -18,6 +19,8 @@ namespace OceanAPI.NET6.Dtos
         public string CategoryName { get; set; }
         public int CourseLevelId { get; set; }
         public string CourseLevel { get; set; }
+        public string CompanyName { get; set; }
+        public string CompanyWebsite { get; set; }
         public UserInProductReadDto User { get; set; }
         public string Base64Image { get; set; }
     }

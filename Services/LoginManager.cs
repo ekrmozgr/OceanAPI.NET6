@@ -34,6 +34,8 @@ namespace OceanAPI.NET6.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.Name + " " + user.Surname),
             };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],

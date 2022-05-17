@@ -50,5 +50,10 @@ namespace OceanAPI.NET6.Repositories
 
             return result;
         }
+
+        public async Task<Product> GetProductForRemove(int id)
+        {
+            return await _dbSet.Include(x => x.BasketProducts).Include(x => x.FavouritesProducts).FirstOrDefaultAsync(x => x.ProductId.Equals(id));
+        }
     }
 }
