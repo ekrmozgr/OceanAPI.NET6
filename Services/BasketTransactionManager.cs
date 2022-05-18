@@ -66,7 +66,7 @@ namespace OceanAPI.NET6.Services
             var basket = await _basketService.GetBasket(id);
             if (basket == null)
                 return null;
-            var product = await _productService.GetProduct(id);
+            var product = await _productService.GetProduct(productId);
             if (product == null)
                 return null;
             var basketProduct = basket.BasketProducts.FirstOrDefault(b => b.ProductId.Equals(productId));
