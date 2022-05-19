@@ -5,11 +5,11 @@ namespace OceanAPI.NET6.Models
 {
     public enum ECourseLevel
     {
-        [Display(Name = "Başlangıç")]
+        [Display(Name = "Beginner")]
         BASLANGIC = 1,
-        [Display(Name = "Orta")]
+        [Display(Name = "Intermediate")]
         ORTA = 2,
-        [Display(Name = "İleri")]
+        [Display(Name = "Advanced")]
         ILERI = 3
     }
     public class CourseLevel

@@ -5,21 +5,21 @@ namespace OceanAPI.NET6.Models
 {
     public enum EProductCategory
     {
-        [Display(Name = "Bulut")]
+        [Display(Name = "Cloud")]
         BULUT = 1,
         [Display(Name = "DevOps")]
         DEVOPS = 2,
         [Display(Name = "ERP")]
         ERP = 3,
-        [Display(Name = "Oyun Tasarımı Geliştirme")]
+        [Display(Name = "Game Design Development")]
         OYUN_TASARIMI_GELISTIRME = 4,
-        [Display(Name = "Ağ Teknolojileri")]
+        [Display(Name = "Network Tehcnologies")]
         AG_TEKNOLOJILERI = 5,
-        [Display(Name = "Siber Güvenlik")]
+        [Display(Name = "Cyber Security")]
         SIBER_GUVENLIK = 6,
-        [Display(Name = "UI/UX Tasarımı")]
+        [Display(Name = "UI/UX Design")]
         UI_UX_TASARIMI = 7,
-        [Display(Name = "Veri Bilimi")]
+        [Display(Name = "Data Science")]
         VERI_BILIMI = 8,
         [Display(Name = "Backend Developer")]
         BACK_END_DEVELOPER = 9,
