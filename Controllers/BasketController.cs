@@ -37,7 +37,7 @@ namespace OceanAPI.NET6.Controllers
             return Ok(basketDto);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="ADMIN,INSTRUCTOR")]
         [HttpPost("products")]
         public async Task<ActionResult> AddProduct(BasketProductCreateDto basketProductCreateDto)
         {
@@ -68,7 +68,7 @@ namespace OceanAPI.NET6.Controllers
             return Ok(basketProductCreateDto);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMIN,INSTRUCTOR")]
         [HttpDelete("{id}/products/{productId}")]
         public async Task<ActionResult> RemoveProduct(int id, int productId)
         {
