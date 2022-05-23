@@ -43,7 +43,8 @@ namespace OceanAPI.NET6.Profiles
                 .ForMember(p => p.Image, x => x.MapFrom(pu => Convert.FromBase64String(pu.Base64Image)));
             CreateMap<Product, ProductCreateDto>()
                 .ForMember(p => p.Base64Image, x => x.MapFrom(a => Convert.ToBase64String(a.Image)));
-            CreateMap<Comments, CommentsReadDto>();
+            CreateMap<Comments, CommentsReadDto>()
+                .ForMember(O => O.DateOfComment, x => x.MapFrom(a => a.DateOfComment.ToString()));
             CreateMap<CommentsCreateDto, Comments>();
             CreateMap<Comments, CommentsCreateDto>();
             CreateMap<Comments, CommentsUpdateDto>().ReverseMap();

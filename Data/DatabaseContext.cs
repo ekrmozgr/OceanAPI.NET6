@@ -50,7 +50,7 @@ namespace OceanAPI.NET6.Data
                 new CourseLevel { CourseLevelId = 3, ECourseLevel = ECourseLevel.ILERI });
             
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, Email = "ekrem@outlook", Password = "Ekrem123.", Role = ERoles.ADMIN, Name = "Ekrem", Surname = "Ozgur", MobilePhone = "5076275287" });
+                new User { UserId = 1, Email = "ekrem.ozgurr@outlook.com", Password = "Ekrem123.", Role = ERoles.ADMIN, Name = "Ekrem", Surname = "Ozgur", MobilePhone = "5076275287" });
             modelBuilder.Entity<Basket>().HasData(
                 new Basket { UserId = 1 });
             modelBuilder.Entity<Favourites>().HasData(

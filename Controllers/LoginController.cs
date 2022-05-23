@@ -38,7 +38,7 @@ namespace OceanAPI.NET6.Controllers
                 return NotFound();
             string body = "Ocean App Şifreniz : " + user.Password;
             await Extensions.Email("Forgotten Password", body, forgottenPasswordDto.Email);
-            return Ok();
+            return Ok(forgottenPasswordDto);
         }
     }
 }
