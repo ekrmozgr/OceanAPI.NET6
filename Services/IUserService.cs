@@ -7,5 +7,7 @@ namespace OceanAPI.NET6.Services
         Task<User> CreateUser(User user);
         Task<User> UpdateUser(User user, int id);
         Task<User> GetUserById(int id);
+        Task<User> UserToInstructor(int id);
+        Task<User> GetUserByEmail(string email);
     }
 }

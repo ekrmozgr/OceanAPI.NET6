@@ -64,10 +64,11 @@ namespace OceanAPI.NET6.Controllers
             if (!Extensions.IsCurrentUser(commentCreateDto.UserId, User))
                 return Forbid();
             var comment = _mapper.Map<CommentsCreateDto,Comments>(commentCreateDto);
-            await _commentsService.AddComment(comment);
+            var response = await _commentsService.AddComment(comment);
+            var commentDto = _mapper.Map<Comments, CommentsReadDto>(response);
             string cacheKey = "product" + comment.UserId;
             _cache.Remove(cacheKey);
-            return Ok(commentCreateDto);
+            return Ok(commentDto);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

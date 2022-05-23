@@ -18,6 +18,7 @@ namespace OceanAPI.NET6.Repositories
         {
             await _dbSet.AddAsync(comment);
             await _context.SaveChangesAsync();
+            await _context.Entry(comment).Reference(p => p.User).LoadAsync();
             return comment;
         }
 

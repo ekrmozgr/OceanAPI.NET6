@@ -75,5 +75,18 @@ namespace OceanAPI.NET6.Controllers
             var userDto = _mapper.Map<UserReadDto>(user);
             return Ok(userDto);
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="ADMIN")]
+        [HttpPut("instructor")]
+        public async Task<ActionResult> UserToInstructor(ForgottenPasswordDto emailDto)
+        {
+            var existingUser = await _userService.GetUserByEmail(emailDto.Email);
+            if (existingUser == null)
+                return NotFound();
+            if(existingUser.Role == ERoles.ADMIN || existingUser.Role == ERoles.INSTRUCTOR)
+                return BadRequest();
+            await _userService.UserToInstructor(existingUser.UserId);
+            return Ok(existingUser);
+        }
     }
 }
