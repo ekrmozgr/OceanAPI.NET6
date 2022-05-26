@@ -33,7 +33,7 @@ namespace OceanAPI.NET6.Data
             modelBuilder.UseIdentityColumns();
 
             modelBuilder.Entity<CompanyContacts>().HasData(
-                new CompanyContacts { CompanyId = 1, CompanyName = "Ocean", Address = "Deneme Adres", Email = "deneme@outlook.com", PhoneNo = "5076275287" });
+                new CompanyContacts { CompanyId = 1, CompanyName = "OceanCompany", Address = "Kemalpaşa, Esentepe Kampüsü, Üniversite Cd., 54050 Serdivan/Sakarya", Email = "ocean8741@gmail.com", PhoneNo = "5555555555" });
 
             modelBuilder.Entity<Role>().HasData(
                 new Role { RoleId = 1, ERole = ERoles.USER });
@@ -57,11 +57,27 @@ namespace OceanAPI.NET6.Data
                 new Favourites { UserId = 1 });
 
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 2, Email = "hacer@outlook", Password = "Hacer123.", Role = ERoles.ADMIN, Name = "Hacer", Surname = "Durak", MobilePhone = "5550268550" });
+                new User { UserId = 2, Email = "hacer.durak@outlook.com", Password = "Hacer123.", Role = ERoles.ADMIN, Name = "Hacer", Surname = "Durak", MobilePhone = "5550268550" });
             modelBuilder.Entity<Basket>().HasData(
                 new Basket { UserId = 2 });
             modelBuilder.Entity<Favourites>().HasData(
                 new Favourites { UserId = 2 });
+
+            modelBuilder.Entity<User>().HasData(
+                new User { UserId = 3, Email = "hasan.hasan@outlook.com", Password = "Hasan123.", Role = ERoles.INSTRUCTOR, Name = "Hasan", Surname = "Elmas", MobilePhone = "5546842569" });
+            modelBuilder.Entity<Basket>().HasData(
+                new Basket { UserId = 3 });
+            modelBuilder.Entity<Favourites>().HasData(
+                new Favourites { UserId = 3 });
+
+            modelBuilder.Entity<User>().HasData(
+                new User { UserId = 4, Email = "esra.esra@outlook.com", Password = "Esra123.", Role = ERoles.USER, Name = "Esra", Surname = "Kiraz", MobilePhone = "5079863485" });
+            modelBuilder.Entity<Basket>().HasData(
+                new Basket { UserId = 4 });
+            modelBuilder.Entity<Favourites>().HasData(
+                new Favourites { UserId = 4 });
+
+
 
 
 
@@ -118,11 +134,11 @@ namespace OceanAPI.NET6.Data
             modelBuilder.Entity<ProductCategory>().HasData(
                new ProductCategory { ProductCategoryId = 13, ProductCategorys = EProductCategory.MOBILE_DEVELOPER });
 
-            modelBuilder.Entity<Product>().Property(b => b.Price).HasPrecision(5, 2);
-            modelBuilder.Entity<Product>().Property(b => b.DiscountPrice).HasPrecision(5, 2);
-            modelBuilder.Entity<Basket>().Property(b => b.Price).HasPrecision(5, 2);
-            modelBuilder.Entity<Order>().Property(b => b.Price).HasPrecision(5, 2);
-            modelBuilder.Entity<OrderProduct>().Property(b => b.ProductPrice).HasPrecision(5, 2);
+            modelBuilder.Entity<Product>().Property(b => b.Price).HasPrecision(15, 2);
+            modelBuilder.Entity<Product>().Property(b => b.DiscountPrice).HasPrecision(15, 2);
+            modelBuilder.Entity<Basket>().Property(b => b.Price).HasPrecision(15, 2);
+            modelBuilder.Entity<Order>().Property(b => b.Price).HasPrecision(15, 2);
+            modelBuilder.Entity<OrderProduct>().Property(b => b.ProductPrice).HasPrecision(15, 2);
 
             modelBuilder.Entity<BasketProduct>().HasKey(bp => new { bp.BasketId, bp.ProductId });
             modelBuilder.Entity<BasketProduct>()

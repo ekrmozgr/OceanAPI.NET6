@@ -6,6 +6,7 @@ using System.Security.Claims;
 
 namespace OceanAPI.NET6
 {
+
     public static class Extensions
     {
         public static bool IsCurrentUser(int id, ClaimsPrincipal User)
@@ -52,8 +53,6 @@ namespace OceanAPI.NET6
 
         public static async Task Email(string subject, string body, string toMailAddress)
         {
-            try
-            {
                 MailMessage message = new MailMessage();
                 SmtpClient smtp = new SmtpClient();
                 message.From = new MailAddress("ocean8741@gmail.com");
@@ -61,16 +60,13 @@ namespace OceanAPI.NET6
                 message.Subject = subject;
                 message.IsBodyHtml = false; //to make message body as html  
                 message.Body = body;
-                smtp.Port = 587;
                 smtp.Host = "smtp.gmail.com"; //for gmail host  
-                smtp.EnableSsl = true;
+                smtp.Port = 587;
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = new NetworkCredential("ocean8741@gmail.com", "ekrem123");
+                smtp.EnableSsl = true;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 await smtp.SendMailAsync(message);
-            }
-            catch (Exception) { }
         }
-
     }
 }

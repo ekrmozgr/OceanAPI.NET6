@@ -92,8 +92,8 @@ namespace OceanAPI.NET6.Services
             foreach (var basketProduct in basket.BasketProducts)
             {
                 int productId = basketProduct.ProductId;
-                messageBody += basketProduct.Product.CompanyName + "\n" + basketProduct.Product.CompanyWebsite + "\n\n";
-                messageBody += basketProduct.Product.Name + "\n\n";
+                messageBody += "***"+basketProduct.Product.CompanyName+"***"+ "\n" + basketProduct.Product.CompanyWebsite + "\n\n";
+                messageBody += "--"+basketProduct.Product.Name+"--" + "\n\n";
                 order.OrderProducts.Add(new OrderProduct { ProductId = productId, ProductQuantity = basketProduct.ProductQuantity, ProductPrice = basketProduct.Product.DiscountPrice });
                 for(int i = 0; i < basketProduct.ProductQuantity; i++)
                 {
@@ -107,8 +107,9 @@ namespace OceanAPI.NET6.Services
             basket.ProductCount = 0;
             basket.BasketProducts.Clear();
             await _basketService.UpdateById(basket, basket.UserId);
+            await _orderService.AddOrder(order);
             await Extensions.Email("Ocean App Courses Coupons", messageBody, purchaseDto.Email);
-            return await _orderService.AddOrder(order);
+            return order;
         }
 
         public async Task<BasketProduct> GetBasketProduct(int basketId, int productId)
