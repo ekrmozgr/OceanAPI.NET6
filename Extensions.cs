@@ -63,7 +63,7 @@ namespace OceanAPI.NET6
                 smtp.Host = "smtp.gmail.com"; //for gmail host  
                 smtp.Port = 587;
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential("ocean8741@gmail.com", "ekrem123");
+                smtp.Credentials = new NetworkCredential("ocean8741@gmail.com", "ocean12.3");
                 smtp.EnableSsl = true;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 await smtp.SendMailAsync(message);

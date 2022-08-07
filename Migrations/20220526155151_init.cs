@@ -350,7 +350,7 @@ namespace OceanAPI.NET6.Migrations
             migrationBuilder.InsertData(
                 table: "CompanyContacts",
                 columns: new[] { "CompanyId", "Address", "CompanyName", "Email", "PhoneNo" },
-                values: new object[] { 1, "Deneme Adres", "Ocean", "deneme@outlook.com", "5076275287" });
+                values: new object[] { 1, "Kemalpaşa, Esentepe Kampüsü, Üniversite Cd., 54050 Serdivan/Sakarya", "OceanCompany", "ocean8741@gmail.com", "5555555555" });
 
             migrationBuilder.InsertData(
                 table: "CourseLevels",
@@ -411,7 +411,9 @@ namespace OceanAPI.NET6.Migrations
                 values: new object[,]
                 {
                     { 1, "ekrem.ozgurr@outlook.com", "5076275287", "Ekrem", "Ekrem123.", "ADMIN", "Ozgur" },
-                    { 2, "hacer@outlook", "5550268550", "Hacer", "Hacer123.", "ADMIN", "Durak" }
+                    { 2, "hacer.durak@outlook.com", "5550268550", "Hacer", "Hacer123.", "ADMIN", "Durak" },
+                    { 3, "hasan.hasan@outlook.com", "5546842569", "Hasan", "Hasan123.", "INSTRUCTOR", "Elmas" },
+                    { 4, "esra.esra@outlook.com", "5079863485", "Esra", "Esra123.", "USER", "Kiraz" }
                 });
 
             migrationBuilder.InsertData(
@@ -420,7 +422,9 @@ namespace OceanAPI.NET6.Migrations
                 values: new object[,]
                 {
                     { 1, 0m, 0 },
-                    { 2, 0m, 0 }
+                    { 2, 0m, 0 },
+                    { 3, 0m, 0 },
+                    { 4, 0m, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -442,7 +446,9 @@ namespace OceanAPI.NET6.Migrations
                 values: new object[,]
                 {
                     { 1, 0 },
-                    { 2, 0 }
+                    { 2, 0 },
+                    { 3, 0 },
+                    { 4, 0 }
                 });
 
             migrationBuilder.CreateIndex(

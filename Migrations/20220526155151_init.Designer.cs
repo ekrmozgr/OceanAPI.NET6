@@ -12,7 +12,7 @@ using OceanAPI.NET6.Data;
 namespace OceanAPI.NET6.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220526114958_init")]
+    [Migration("20220526155151_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,18 @@ namespace OceanAPI.NET6.Migrations
                         new
                         {
                             UserId = 2,
+                            Price = 0m,
+                            ProductCount = 0
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            Price = 0m,
+                            ProductCount = 0
+                        },
+                        new
+                        {
+                            UserId = 4,
                             Price = 0m,
                             ProductCount = 0
                         });
@@ -135,10 +147,10 @@ namespace OceanAPI.NET6.Migrations
                         new
                         {
                             CompanyId = 1,
-                            Address = "Deneme Adres",
-                            CompanyName = "Ocean",
-                            Email = "deneme@outlook.com",
-                            PhoneNo = "5076275287"
+                            Address = "Kemalpaşa, Esentepe Kampüsü, Üniversite Cd., 54050 Serdivan/Sakarya",
+                            CompanyName = "OceanCompany",
+                            Email = "ocean8741@gmail.com",
+                            PhoneNo = "5555555555"
                         });
                 });
 
@@ -358,6 +370,16 @@ namespace OceanAPI.NET6.Migrations
                         new
                         {
                             UserId = 2,
+                            ProductCount = 0
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            ProductCount = 0
+                        },
+                        new
+                        {
+                            UserId = 4,
                             ProductCount = 0
                         });
                 });
@@ -676,12 +698,32 @@ namespace OceanAPI.NET6.Migrations
                         new
                         {
                             UserId = 2,
-                            Email = "hacer@outlook",
+                            Email = "hacer.durak@outlook.com",
                             MobilePhone = "5550268550",
                             Name = "Hacer",
                             Password = "Hacer123.",
                             Role = "ADMIN",
                             Surname = "Durak"
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            Email = "hasan.hasan@outlook.com",
+                            MobilePhone = "5546842569",
+                            Name = "Hasan",
+                            Password = "Hasan123.",
+                            Role = "INSTRUCTOR",
+                            Surname = "Elmas"
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            Email = "esra.esra@outlook.com",
+                            MobilePhone = "5079863485",
+                            Name = "Esra",
+                            Password = "Esra123.",
+                            Role = "USER",
+                            Surname = "Kiraz"
                         });
                 });
 
