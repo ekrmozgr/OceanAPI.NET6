@@ -5,7 +5,7 @@
     - Input validation was performed
     - DTOs were created and AutoMapper library was used to link them to the entities
     - Authorizaton, Authentication and Security operations were done using JWT Bearer
-    - In-memory cache implemented
+    - In-memory cache was implemented
     - API works as async
     
   ## Example Photos       
