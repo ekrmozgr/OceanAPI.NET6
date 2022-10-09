@@ -7,8 +7,6 @@
     - Authorizaton, Authentication and Security operations were done using JWT Bearer
     - In-memory cache was implemented
     - API works as async
-    
-  ## Example Photos       
         
   </br>
   
